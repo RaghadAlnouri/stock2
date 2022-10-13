@@ -1,4 +1,5 @@
 from flask import Flask
+from src.business_logic.process_query import predict
 
 app = Flask(__name__)
 
@@ -9,8 +10,8 @@ def hello():
 
 
 @app.route("/get_stock_val/<ticker>", methods=["GET"])
-def get_stock_val(ticker):
-    return
+def get_stock_val(ticker: str) -> float:
+    return predict(ticker)
 
 
 if __name__ == "__main__":
