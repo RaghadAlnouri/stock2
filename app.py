@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 @app.route("/", methods=["GET"])
 def hello():
-    return f'Flask has opened a server, try "/another_page"!\n'
+    return f'Flask has opened a server, to predict use "/get_stock_val/<ticker>"!\n'
 
 
 @app.route("/get_stock_val/<ticker>", methods=["GET"])
