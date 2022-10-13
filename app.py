@@ -8,9 +8,9 @@ def hello():
     return f'Flask has opened a server, try "/another_page"!\n'
 
 
-@app.route("/another_page", methods=["GET"])
-def another_page():
-    return f"here is another page"
+@app.route("/get_stock_val/<ticker>", methods=["GET"])
+def get_stock_val(ticker):
+    return
 
 
 if __name__ == "__main__":
