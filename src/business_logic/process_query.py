@@ -55,8 +55,18 @@ def create_preprocess_pipeline_predict():
     return preprocess_pipeline_predict
 
 
+# function to create LR pipeline, this pipeline requires the pipeline from the training pipeline function
 def create_pipeline_lr_creator(preprocess_pipeline_train):
     pipeline_lr_creator = create_pipeline(
         [preprocess_pipeline_train, split_X_Y, create_logistic_regression_learner()]
     )
     return pipeline_lr_creator
+
+
+def create_pipeline_create_prediction(
+    preprocess_pipeline_predict, pipeline_lr_creator, ticker
+):
+    pipeline_create_prediction = create_pipeline(
+        [preprocess_pipeline_predict, pipeline_lr_creator(ticker)]
+    )
+    return pipeline_create_prediction
