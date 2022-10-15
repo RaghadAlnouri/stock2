@@ -63,6 +63,7 @@ def create_pipeline_lr_creator(preprocess_pipeline_train):
     return pipeline_lr_creator
 
 
+# final prediction pipeline which depends on lr creator and predict preprocessor
 def create_pipeline_create_prediction(
     preprocess_pipeline_predict, pipeline_lr_creator, ticker
 ):
