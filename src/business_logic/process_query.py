@@ -53,3 +53,10 @@ def create_preprocess_pipeline_predict():
         ),
     )
     return preprocess_pipeline_predict
+
+
+def create_pipeline_lr_creator(preprocess_pipeline_train):
+    pipeline_lr_creator = create_pipeline(
+        [preprocess_pipeline_train, split_X_Y, create_logistic_regression_learner()]
+    )
+    return pipeline_lr_creator
