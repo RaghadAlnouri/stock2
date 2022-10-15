@@ -43,3 +43,8 @@ def split_X_Y(
     Y = df.iloc[:, -1]
     return X, Y
 
+
+# simple nan remover
+def remove_nans(df: pd.core.frame.DataFrame) -> pd.core.frame.DataFrame:
+    return df.dropna()
+
