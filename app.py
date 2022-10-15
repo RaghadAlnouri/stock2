@@ -1,5 +1,10 @@
 from flask import Flask
-from src.business_logic.process_query import predict
+from src.business_logic.process_query import (
+    create_preprocess_pipeline_train,
+    create_preprocess_pipeline_predict,
+    create_pipeline_lr_creator,
+    create_pipeline_create_prediction,
+)
 
 app = Flask(__name__)
 
@@ -11,7 +16,14 @@ def hello():
 
 @app.route("/get_stock_val/<ticker>", methods=["GET"])
 def get_stock_val(ticker: str) -> float:
-    return predict(ticker)
+    preprocess_pipeline_train = create_preprocess_pipeline_train()
+    preprocess_pipeline_predict = create_preprocess_pipeline_predict()
+    pipeline_lr_creator = create_pipeline_lr_creator(preprocess_pipeline_train)
+    pipeline_create_prediction = create_pipeline_create_prediction(
+        preprocess_pipeline_predict, pipeline_lr_creator, ticker
+    )
+    res = pipeline_create_prediction(ticker)[-1]
+    return f"{res}"
 
 
 if __name__ == "__main__":
