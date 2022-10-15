@@ -1,7 +1,7 @@
 from ast import Call
 import pandas as pd
 import numpy as np
-from typing import Callable, List
+from typing import Callable, List, Tuple
 
 # function to add lags to dataframe
 def create_lag_creator(
@@ -32,4 +32,14 @@ def create_cols_to_keep(
         return df[list_cols]
 
     return cols_to_keep
+
+
+# function to split x and y for model
+def split_X_Y(
+    df: pd.core.frame.DataFrame,
+) -> Tuple[pd.core.frame.DataFrame, pd.core.frame.Series]:
+    df = df.copy()
+    X = df.drop("label", axis=1)
+    Y = df.iloc[:, -1]
+    return X, Y
 

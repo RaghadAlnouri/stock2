@@ -2,8 +2,6 @@ from typing import Any, Callable, List
 
 
 # pipeline creator
-
-
 def create_pipeline(list_functions: List[Callable]) -> Callable[[List[Callable]]]:
     def pipeline(input: Any) -> Any:
         res = input
