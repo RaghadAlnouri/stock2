@@ -4,9 +4,7 @@ import datetime
 import pandas as pd
 
 
-def create_data_fetcher(
-    lags: int, last: bool = False
-) -> Callable[[str], pd.core.frame.DataFrame]:
+def create_data_fetcher(lags: int, last: bool = False) -> Callable[[str], pd.core.frame.DataFrame]:
     def data_fetcher(ticker: str) -> pd.core.frame.DataFrame:
         if last:
             now = datetime.datetime.now()
