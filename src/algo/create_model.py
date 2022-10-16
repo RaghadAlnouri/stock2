@@ -1,7 +1,7 @@
 from typing import Any, Callable, List
 from sklearn.linear_model import LogisticRegression
 
-from src.algo.add_features import create_splitter
+from src.algo.add_features import create_splitter, create_preprocess_pipeline_train, create_preprocess_pipeline_predict
 
 
 # pipeline creator
@@ -45,3 +45,14 @@ def create_pipeline_create_prediction(preprocess_pipeline_predict, pipeline_lr_c
     pipeline_create_prediction = create_pipeline([preprocess_pipeline_predict,
                                                   pipeline_lr_creator(ticker)])
     return pipeline_create_prediction
+
+
+def create_prediction_pipeline(ticker, train_data_fetcher, predict_data_fetcher):
+    preprocess_pipeline_train = create_preprocess_pipeline_train(train_data_fetcher)
+    preprocess_pipeline_predict = create_preprocess_pipeline_predict(predict_data_fetcher)
+    pipeline_lr_creator = create_pipeline_lr_creator(preprocess_pipeline_train)
+    pipeline_create_prediction = create_pipeline_create_prediction(preprocess_pipeline_predict, pipeline_lr_creator,
+                                                                   ticker)
+    return pipeline_create_prediction
+
+

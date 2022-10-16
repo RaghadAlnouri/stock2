@@ -50,8 +50,8 @@ def remove_nans(df: pd.core.frame.DataFrame) -> pd.core.frame.DataFrame:
 
 
 # create training preprocessing pipeline
-def create_preprocess_pipeline_train():
-    preprocess_pipeline_train = create_pipeline([create_data_fetcher(NUM_LAGS),
+def create_preprocess_pipeline_train(train_data_fetcher):
+    preprocess_pipeline_train = create_pipeline([train_data_fetcher,
                                                  create_lag_creator(NUM_LAGS, "close"),
                                                  add_label_buy_close,
                                                  remove_nans,
@@ -64,8 +64,8 @@ def create_preprocess_pipeline_train():
 
 
 # create prediction preprocessing pipeline
-def create_preprocess_pipeline_predict():
-    preprocess_pipeline_predict = create_pipeline([create_data_fetcher(NUM_LAGS, last=True),
+def create_preprocess_pipeline_predict(predict_data_fetcher):
+    preprocess_pipeline_predict = create_pipeline([predict_data_fetcher,
                                                    create_lag_creator(NUM_LAGS, "close"),
                                                    remove_nans,
                                                    create_cols_to_keep(["close", "close_lag1", "close_lag2",
