@@ -70,6 +70,6 @@ def create_preprocess_pipeline_predict():
                                                    remove_nans,
                                                    create_cols_to_keep(["close", "close_lag1", "close_lag2",
                                                                         "close_lag3", "close_lag4", "close_lag5"])
-         ]
-        )
+                                                   ]
+                                                  )
     return preprocess_pipeline_predict
