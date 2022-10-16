@@ -1,4 +1,4 @@
-goname: stock
+goname: stock2
 
 dependencies:
   - pip=22.2.2
