@@ -33,5 +33,5 @@ def business_logic_get_model(ticker):
     return model
 
 
-def predict(model, ticker):
+def get_prediction(model, ticker):
     return model(ticker)[-1]
