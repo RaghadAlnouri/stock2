@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+import configparser
 
 from src.algo.add_features import (
     create_lag_creator,
@@ -12,6 +13,19 @@ from src.algo.create_model import create_pipeline, create_logistic_regression_le
 from src.IO.get_data import create_data_fetcher
 
 NUM_LAGS = 5
+ROOT_BUCKET = "mat-ycng228-stock2-bucket-proj"
+
+
+def get_version():
+    config = configparser.ConfigParser()
+    config.read("application.conf")
+    return config["DEFAULT"]["version"]
+
+
+def get_bucket_name():
+    version = get_version()
+    return f'{ROOT_BUCKET}_{version.replace(".", "")}'
+
 
 # create training preprocessing pipeline
 def create_preprocess_pipeline_train():
