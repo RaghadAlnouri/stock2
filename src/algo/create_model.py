@@ -1,10 +1,11 @@
 from typing import Any
 from sklearn.linear_model import LogisticRegression
 
+
 # pipeline creator
 def create_pipeline(list_functions):
-    def pipeline(input: Any) -> Any:
-        res = input
+    def pipeline(inputs: Any) -> Any:
+        res = inputs
         for function in list_functions:
             res = function(res)
         return res
@@ -26,7 +27,3 @@ def create_logistic_regression_learner():
         return predict_lr_on
 
     return train_lr_on
-
-
-
-

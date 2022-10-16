@@ -12,7 +12,7 @@ def get_version():
     return config["DEFAULT"]["version"]
 
 
-def get_bucket_name():
+def get_bucket_name() -> str:
     version = get_version()
     return f'{ROOT_BUCKET}_{version.replace(".", "")}'
 
