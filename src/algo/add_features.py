@@ -65,11 +65,11 @@ def create_preprocess_pipeline_train():
 
 # create prediction preprocessing pipeline
 def create_preprocess_pipeline_predict():
-    preprocess_pipeline_predict = create_pipeline(
-        [create_data_fetcher(NUM_LAGS, last=True), create_lag_creator(NUM_LAGS, "close"),
-         remove_nans, create_cols_to_keep(["close", "close_lag1", "close_lag2",
-                                           "close_lag3", "close_lag4", "close_lag5",
-                                           ])
+    preprocess_pipeline_predict = create_pipeline([create_data_fetcher(NUM_LAGS, last=True),
+                                                   create_lag_creator(NUM_LAGS, "close"),
+                                                   remove_nans,
+                                                   create_cols_to_keep(["close", "close_lag1", "close_lag2",
+                                                                        "close_lag3", "close_lag4", "close_lag5"])
          ]
         )
     return preprocess_pipeline_predict

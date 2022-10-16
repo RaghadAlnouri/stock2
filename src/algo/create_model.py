@@ -1,6 +1,9 @@
 from typing import Any, Callable, List
 from sklearn.linear_model import LogisticRegression
 
+from src.algo.add_features import create_splitter
+
+
 # pipeline creator
 def create_pipeline(list_functions):
     def pipeline(input: Any) -> Any:
@@ -30,17 +33,15 @@ def create_logistic_regression_learner():
 
 # function to create LR pipeline, this pipeline requires the pipeline from the training pipeline function
 def create_pipeline_lr_creator(preprocess_pipeline_train):
-    pipeline_lr_creator = create_pipeline(
-        [preprocess_pipeline_train, split_X_Y, create_logistic_regression_learner()]
-    )
+    pipeline_lr_creator = create_pipeline([preprocess_pipeline_train,
+                                           create_splitter('label'),
+                                           create_logistic_regression_learner()]
+                                          )
     return pipeline_lr_creator
 
 
 # final prediction pipeline which depends on lr creator and predict preprocessor
-def create_pipeline_create_prediction(
-    preprocess_pipeline_predict, pipeline_lr_creator, ticker
-):
-    pipeline_create_prediction = create_pipeline(
-        [preprocess_pipeline_predict, pipeline_lr_creator(ticker)]
-    )
+def create_pipeline_create_prediction(preprocess_pipeline_predict, pipeline_lr_creator, ticker):
+    pipeline_create_prediction = create_pipeline([preprocess_pipeline_predict,
+                                                  pipeline_lr_creator(ticker)])
     return pipeline_create_prediction
