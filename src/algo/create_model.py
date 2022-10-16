@@ -47,7 +47,7 @@ def create_pipeline_create_prediction(preprocess_pipeline_predict, pipeline_lr_c
     return pipeline_create_prediction
 
 
-def create_prediction_pipeline(ticker, train_data_fetcher, predict_data_fetcher):
+def create_predictor(ticker, train_data_fetcher, predict_data_fetcher):
     preprocess_pipeline_train = create_preprocess_pipeline_train(train_data_fetcher)
     preprocess_pipeline_predict = create_preprocess_pipeline_predict(predict_data_fetcher)
     pipeline_lr_creator = create_pipeline_lr_creator(preprocess_pipeline_train)
