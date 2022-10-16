@@ -31,28 +31,5 @@ def create_logistic_regression_learner():
     return train_lr_on
 
 
-# function to create LR pipeline, this pipeline requires the pipeline from the training pipeline function
-def create_pipeline_lr_creator(preprocess_pipeline_train):
-    pipeline_lr_creator = create_pipeline([preprocess_pipeline_train,
-                                           create_splitter('label'),
-                                           create_logistic_regression_learner()]
-                                          )
-    return pipeline_lr_creator
-
-
-# final prediction pipeline which depends on lr creator and predict preprocessor
-def create_pipeline_create_prediction(preprocess_pipeline_predict, pipeline_lr_creator, ticker):
-    pipeline_create_prediction = create_pipeline([preprocess_pipeline_predict,
-                                                  pipeline_lr_creator(ticker)])
-    return pipeline_create_prediction
-
-
-def create_predictor(ticker, train_data_fetcher, predict_data_fetcher):
-    preprocess_pipeline_train = create_preprocess_pipeline_train(train_data_fetcher)
-    preprocess_pipeline_predict = create_preprocess_pipeline_predict(predict_data_fetcher)
-    pipeline_lr_creator = create_pipeline_lr_creator(preprocess_pipeline_train)
-    pipeline_create_prediction = create_pipeline_create_prediction(preprocess_pipeline_predict, pipeline_lr_creator,
-                                                                   ticker)
-    return pipeline_create_prediction
 
 

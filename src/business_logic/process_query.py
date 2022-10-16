@@ -2,7 +2,7 @@ import configparser
 
 from src.IO.get_data import create_data_fetcher
 from src.IO.storage_tools import get_model_from_bucket, upload_file_to_bucket
-from src.algo.create_model import create_predictor
+from src.algo.add_features import create_predictor
 from src.business_logic.constants import NUM_LAGS, ROOT_BUCKET
 
 
