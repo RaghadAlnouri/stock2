@@ -1,9 +1,6 @@
 from typing import Any
 from sklearn.linear_model import LogisticRegression
 
-from src.algo.add_features import create_splitter, create_preprocess_pipeline_train, create_preprocess_pipeline_predict
-
-
 # pipeline creator
 def create_pipeline(list_functions):
     def pipeline(input: Any) -> Any:

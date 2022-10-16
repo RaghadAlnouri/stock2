@@ -1,8 +1,8 @@
-import pandas as pd
-import numpy as np
-from typing import Callable, List, Tuple
+from typing import Callable, List
 
-from src.IO.get_data import create_data_fetcher
+import numpy as np
+import pandas as pd
+
 from src.algo.create_model import create_pipeline, create_logistic_regression_learner
 from src.business_logic.constants import NUM_LAGS
 
@@ -33,9 +33,8 @@ def create_cols_to_keep(list_cols: List[str]) -> Callable[[pd.core.frame.DataFra
 
 
 # function to split x and y for model
-def create_splitter(col_label: str) -> Callable[
-    [pd.core.frame.DataFrame], Tuple[pd.core.frame.DataFrame, pd.core.frame.Series]]:
-    def split_x_y(df: pd.core.frame.DataFrame) -> Tuple[pd.core.frame.DataFrame, pd.core.frame.Series]:
+def create_splitter(col_label: str):
+    def split_x_y(df):
         df = df.copy()
         x = df.drop(col_label, axis=1)
         y = df[col_label]

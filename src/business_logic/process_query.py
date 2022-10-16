@@ -1,7 +1,7 @@
 import configparser
 
 from src.IO.get_data import create_data_fetcher
-from src.IO.storage_tools import get_model_from_bucket, upload_file_to_bucket
+from src.IO.storage_tools import get_model_from_bucket, upload_file_to_bucket, create_bucket
 from src.algo.add_features import create_predictor
 from src.business_logic.constants import NUM_LAGS, ROOT_BUCKET
 
@@ -23,6 +23,7 @@ def get_model_filename_from_ticker(ticker):
 
 def business_logic_get_model(ticker):
     bucket_name = get_bucket_name()
+    create_bucket(bucket_name)
     model_filename = get_model_filename_from_ticker(ticker)
     model = get_model_from_bucket(model_filename, bucket_name)
     if model is None:
