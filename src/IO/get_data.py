@@ -8,8 +8,13 @@ def create_data_fetcher(days: int, last: bool = False) -> Callable[[str], pd.cor
     def data_fetcher(ticker: str) -> pd.core.frame.DataFrame:
         if last:
             now = datetime.datetime.now()
-            start_date = now - datetime.timedelta(days=days)
+            start_date = now - datetime.timedelta(days=days + 2)
             return si.get_data(ticker, start_date)
         return si.get_data(ticker)
 
     return data_fetcher
+
+
+if __name__ == '__main__':
+    train_data_fetcher = create_data_fetcher(5, True)
+    assert len(train_data_fetcher('ABBV')) == 5
