@@ -1,6 +1,7 @@
 *.idea*
 *.csv
 *.pkl
+*.dill
 dist*
 *.DS_Store
 .DS_Store
