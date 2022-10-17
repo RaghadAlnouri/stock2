@@ -1,4 +1,4 @@
-from typing import Callable, List
+from typing import Callable, List, Tuple
 
 import numpy as np
 import pandas as pd
@@ -34,7 +34,7 @@ def create_cols_to_keep(list_cols: List[str]) -> Callable[[pd.core.frame.DataFra
 
 # function to split x and y for model
 def create_splitter(col_label: str):
-    def split_x_y(df):
+    def split_x_y(df: pd.core.frame.DataFrame) -> Tuple[pd.core.frame.DataFrame, pd.core.frame.Series]:
         df = df.copy()
         x = df.drop(col_label, axis=1)
         y = df[col_label]

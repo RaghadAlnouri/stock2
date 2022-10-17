@@ -19,7 +19,7 @@ def get_bucket_name() -> str:
     return f'{ROOT_BUCKET}_{version.replace(".", "")}'
 
 
-def get_model_filename_from_ticker(ticker):
+def get_model_filename_from_ticker(ticker) -> str:
     return f'{ticker}.dill'
 
 
