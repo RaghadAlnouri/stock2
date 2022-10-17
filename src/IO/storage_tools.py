@@ -3,10 +3,9 @@
 
 import logging
 
-import joblib
 from google.api_core.exceptions import NotFound
 from google.cloud import storage
-
+import dill
 
 def create_bucket(bucket_name):
     log = logging.getLogger()
@@ -34,7 +33,7 @@ def upload_file_to_bucket(model_file_name, bucket_name):
 def delete_model(ticker, bucket_name):
     client = storage.Client()
     b = client.get_bucket(bucket_name)
-    blob = storage.Blob(f"{ticker}.pkl", b)
+    blob = storage.Blob(f"{ticker}.dill", b)
     blob.delete()
 
 
@@ -50,7 +49,7 @@ def get_model_from_bucket(model_filename, bucket_name):
 
             client.download_blob_to_file(blob, file_obj)
         with open(f"{model_filename}", "rb") as file_obj:
-            model = joblib.load(file_obj)
+            model = dill.load(file_obj)
     except NotFound as e:
         log.warning(f"model {model_filename} not found\n")
         model = None
