@@ -1,5 +1,7 @@
 import configparser
 
+import joblib
+
 from src.IO.get_data import create_data_fetcher
 from src.IO.storage_tools import get_model_from_bucket, upload_file_to_bucket, create_bucket
 from src.algo.add_features import create_predictor
@@ -30,6 +32,8 @@ def business_logic_get_model(ticker):
         train_data_fetcher = create_data_fetcher(NUM_LAGS)
         predict_data_fetcher = create_data_fetcher(NUM_LAGS, True)
         model = create_predictor(ticker, train_data_fetcher, predict_data_fetcher)
+        with open(model_filename, 'wb') as f:
+            joblib.dump(model, f)
         upload_file_to_bucket(model_filename, bucket_name)
     return model
 

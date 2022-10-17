@@ -15,7 +15,7 @@ def hello():
 def get_stock_val(ticker: str) -> str:
     model = business_logic_get_model(ticker)
     prediction = get_prediction(model, ticker)
-    return f'{prediction[-1]}'
+    return f'{prediction}'
 
 
 @app.route('/getversion/')
