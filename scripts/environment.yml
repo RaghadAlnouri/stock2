@@ -9,7 +9,7 @@ dependencies:
       - pandas
       - requests
       - scikit-learn
-      - joblib
+      - dill
       - requests-html
       - yahoo-fin
       - google-cloud-storage
