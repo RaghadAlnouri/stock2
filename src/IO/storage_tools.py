@@ -7,7 +7,8 @@ from google.api_core.exceptions import NotFound
 from google.cloud import storage
 import dill
 
-def create_bucket(bucket_name):
+
+def create_bucket(bucket_name: str) -> None:
     log = logging.getLogger()
 
     storage_client = storage.Client()
@@ -20,7 +21,7 @@ def create_bucket(bucket_name):
         log.info("Bucket {} already exists".format(bucket_name))
 
 
-def upload_file_to_bucket(model_file_name, bucket_name):
+def upload_file_to_bucket(model_file_name: str, bucket_name: str) -> None:
     log = logging.getLogger()
     log.warning(f"uploading {model_file_name} to {bucket_name}")
     client = storage.Client()
@@ -30,14 +31,14 @@ def upload_file_to_bucket(model_file_name, bucket_name):
         blob.upload_from_file(model_file)
 
 
-def delete_model(ticker, bucket_name):
+def delete_model(ticker: str, bucket_name: str) -> None:
     client = storage.Client()
     b = client.get_bucket(bucket_name)
     blob = storage.Blob(f"{ticker}.dill", b)
     blob.delete()
 
 
-def get_model_from_bucket(model_filename, bucket_name):
+def get_model_from_bucket(model_filename: str, bucket_name: str):
     log = logging.getLogger()
     client = storage.Client()
     b = client.get_bucket(bucket_name)

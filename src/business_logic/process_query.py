@@ -8,7 +8,7 @@ from src.algo.add_features import create_predictor
 from src.business_logic.constants import NUM_LAGS, ROOT_BUCKET
 
 
-def get_version():
+def get_version() -> str:
     config = configparser.ConfigParser()
     config.read("application.conf")
     return config["DEFAULT"]["version"]
@@ -19,11 +19,11 @@ def get_bucket_name() -> str:
     return f'{ROOT_BUCKET}_{version.replace(".", "")}'
 
 
-def get_model_filename_from_ticker(ticker) -> str:
+def get_model_filename_from_ticker(ticker: str) -> str:
     return f'{ticker}.dill'
 
 
-def business_logic_get_model(ticker):
+def business_logic_get_model(ticker: str):
     bucket_name = get_bucket_name()
     create_bucket(bucket_name)
     model_filename = get_model_filename_from_ticker(ticker)

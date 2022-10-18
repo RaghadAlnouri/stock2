@@ -4,8 +4,8 @@ import datetime
 import pandas as pd
 
 
-def create_data_fetcher(days: int, last: bool = False) -> Callable[[str], pd.core.frame.DataFrame]:
-    def data_fetcher(ticker: str) -> pd.core.frame.DataFrame:
+def create_data_fetcher(days: int, last: bool = False) -> Callable[[str], pd.DataFrame]:
+    def data_fetcher(ticker: str) -> pd.DataFrame:
         if last:
             now = datetime.datetime.now()
             start_date = now - datetime.timedelta(days=days + 2)
