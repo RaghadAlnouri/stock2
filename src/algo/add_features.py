@@ -9,7 +9,7 @@ from src.business_logic.constants import NUM_LAGS
 
 # function to add lags to dataframe
 def create_lag_creator(num_lags: int, col_name: str) -> Callable[[pd.DataFrame], pd.DataFrame]:
-    def lag_creator(df: pd.DataFrame):
+    def lag_creator(df: pd.DataFrame) -> pd.DataFrame:
         for num in range(num_lags):
             df[f"{col_name}_lag{num + 1}"] = df[col_name].shift(num)
         return df
@@ -33,7 +33,7 @@ def create_cols_to_keep(list_cols: List[str]) -> Callable[[pd.DataFrame], pd.Dat
 
 
 # function to split x and y for model
-def create_splitter(col_label: str):
+def create_splitter(col_label: str) -> Callable[[pd.DataFrame], Tuple[pd.DataFrame, pd.Series]]:
     def split_x_y(df: pd.DataFrame) -> Tuple[pd.DataFrame, pd.Series]:
         df = df.copy()
         x = df.drop(col_label, axis=1)
