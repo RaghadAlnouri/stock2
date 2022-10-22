@@ -33,8 +33,7 @@ def create_cols_to_keep(list_cols: List[str]) -> Callable[[pd.DataFrame], pd.Dat
 
 
 # function to split x and y for model
-def create_splitter(col_label:
-                    ) -> Callable[[pd.DataFrame], Tuple[pd.DataFrame, pd.Series]]:
+def create_splitter(col_label: str) -> Callable[[pd.DataFrame], Tuple[pd.DataFrame, pd.Series]]:
     def split_x_y(df: pd.DataFrame) -> Tuple[pd.DataFrame, pd.Series]:
         df = df.copy()
         x = df.drop(col_label, axis=1)
