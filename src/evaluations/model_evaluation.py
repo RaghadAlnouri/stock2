@@ -31,5 +31,6 @@ def main():
     test_predictor = create_pipeline.create_predictor(df, train_data_fetcher, test_data_fetcher)
     train_predictor(df)
 
+
 if __name__ == "__main__":
     main()
