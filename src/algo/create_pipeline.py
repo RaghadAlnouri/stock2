@@ -14,10 +14,7 @@ def create_preprocess_pipeline_train(train_data_fetcher):
                                                  create_cols_to_keep(["close", "absolute", "angle", "close_lag1",
                                                                       "close_lag2", "close_lag3", "close_lag4",
                                                                       "close_lag5", "label",
-                                                                      ]),
-                                                 create_numeric_scaler(["close", "absolute", "angle", "close_lag1",
-                                                                        "close_lag2", "close_lag3", "close_lag4",
-                                                                        "close_lag5"])
+                                                                      ])
                                                  ]
                                                 )
     return preprocess_pipeline_train
@@ -31,10 +28,7 @@ def create_preprocess_pipeline_predict(predict_data_fetcher):
                                                    remove_nans,
                                                    create_cols_to_keep(["close", "absolute", "angle", "close_lag1",
                                                                         "close_lag2", "close_lag3", "close_lag4",
-                                                                        "close_lag5"]),
-                                                   create_numeric_scaler(["close", "absolute", "angle", "close_lag1",
-                                                                          "close_lag2", "close_lag3", "close_lag4",
-                                                                          "close_lag5"])
+                                                                        "close_lag5"])
                                                    ]
                                                   )
     return preprocess_pipeline_predict

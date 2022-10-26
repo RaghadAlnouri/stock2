@@ -52,7 +52,7 @@ def main():
         train_balanced_accuracy_score.append(balanced_accuracy_score(train_labels, train_predictions))
         test_balanced_accuracy_score.append(balanced_accuracy_score(test_labels, test_predictions))
 
-    model_name = 'Log Reg with Fourier Features'
+    model_name = 'Log Reg with Fourier Features + scale'
     with open('src/evaluations/balanced_accuracy_scores.csv', 'a') as csvfile:
         score_writer = csv.writer(csvfile, delimiter=',')
         score_writer.writerow([model_name, np.mean(train_balanced_accuracy_score), np.mean(test_balanced_accuracy_score)])

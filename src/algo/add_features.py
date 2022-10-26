@@ -56,14 +56,3 @@ def create_fourier_transformer(col: str) -> Callable[[pd.DataFrame], pd.DataFram
         df['angle'] = df['fft'].apply(lambda x: np.angle(x))
         return df.drop('fft', axis=1)
     return fourier_transform_features
-
-
-def create_numeric_scaler(cols_to_scale: List[str]) -> Callable[[pd.DataFrame], pd.DataFrame]:
-    def numeric_scaler(df: pd.DataFrame) -> pd.DataFrame:
-        df = df.copy()
-        for col in cols_to_scale:
-            mean = np.mean(df[col])
-            std = np.std(df[col])
-            df[col] = df[col].apply(lambda x: (x - mean) / std)
-        return df
-    return numeric_scaler
