@@ -1,5 +1,5 @@
 from src.algo.add_features import create_lag_creator, add_label_buy_close, remove_nans, create_cols_to_keep, \
-    create_splitter, create_fourier_transformer, create_numeric_scaler, cci
+    create_splitter, create_fourier_transformer, cci
 from src.algo.create_model import create_pipeline, create_logistic_regression_learner
 from src.business_logic.constants import NUM_LAGS
 
