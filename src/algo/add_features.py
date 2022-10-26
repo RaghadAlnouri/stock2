@@ -55,4 +55,13 @@ def create_fourier_transformer(col: str) -> Callable[[pd.DataFrame], pd.DataFram
         df['absolute'] = df['fft'].apply(lambda x: np.abs(x))
         df['angle'] = df['fft'].apply(lambda x: np.angle(x))
         return df.drop('fft', axis=1)
+
     return fourier_transform_features
+
+
+def cci(df: pd.DataFrame, ndays: int = 20) -> pd.DataFrame:
+    df['TP'] = (df['high'] + df['low'] + df['close']) / 3
+    df['sma'] = df['TP'].rolling(ndays).mean()
+    df['mad'] = df['TP'].rolling(ndays).apply(lambda x: pd.Series(x).mad())
+    df['CCI'] = (df['TP'] - df['sma']) / (0.015 * df['mad'])
+    return df.drop(['TP', 'sma', 'mad'], axis=1)
