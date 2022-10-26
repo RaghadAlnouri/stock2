@@ -1,5 +1,5 @@
 from src.algo.add_features import create_lag_creator, add_label_buy_close, remove_nans, create_cols_to_keep, \
-    create_splitter, create_fourier_transformer
+    create_splitter, create_fourier_transformer, create_numeric_scaler
 from src.algo.create_model import create_pipeline, create_logistic_regression_learner
 from src.business_logic.constants import NUM_LAGS
 
@@ -14,7 +14,10 @@ def create_preprocess_pipeline_train(train_data_fetcher):
                                                  create_cols_to_keep(["close", "absolute", "angle", "close_lag1",
                                                                       "close_lag2", "close_lag3", "close_lag4",
                                                                       "close_lag5", "label",
-                                                                      ])
+                                                                      ]),
+                                                 create_numeric_scaler(["close", "absolute", "angle", "close_lag1",
+                                                                        "close_lag2", "close_lag3", "close_lag4",
+                                                                        "close_lag5"])
                                                  ]
                                                 )
     return preprocess_pipeline_train
@@ -28,7 +31,10 @@ def create_preprocess_pipeline_predict(predict_data_fetcher):
                                                    remove_nans,
                                                    create_cols_to_keep(["close", "absolute", "angle", "close_lag1",
                                                                         "close_lag2", "close_lag3", "close_lag4",
-                                                                        "close_lag5"])
+                                                                        "close_lag5"]),
+                                                   create_numeric_scaler(["close", "absolute", "angle", "close_lag1",
+                                                                          "close_lag2", "close_lag3", "close_lag4",
+                                                                          "close_lag5"])
                                                    ]
                                                   )
     return preprocess_pipeline_predict
