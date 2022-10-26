@@ -3,8 +3,6 @@ from typing import Callable, List, Tuple
 import numpy as np
 import pandas as pd
 
-from sklearn.preprocessing import StandardScaler
-
 
 # function to add lags to dataframe
 def create_lag_creator(num_lags: int, col_name: str) -> Callable[[pd.DataFrame], pd.DataFrame]:
@@ -51,7 +49,7 @@ def remove_nans(df: pd.DataFrame) -> pd.DataFrame:
 def create_fourier_transformer(col: str) -> Callable[[pd.DataFrame], pd.DataFrame]:
     def fourier_transform_features(df: pd.DataFrame) -> pd.DataFrame:
         df = df.copy()
-        df['fft'] = np.fft.fft(np.asarray(df['close'].tolist()))
+        df['fft'] = np.fft.fft(np.asarray(df[col].tolist()))
         df['absolute'] = df['fft'].apply(lambda x: np.abs(x))
         df['angle'] = df['fft'].apply(lambda x: np.angle(x))
         return df.drop('fft', axis=1)
@@ -62,6 +60,6 @@ def create_fourier_transformer(col: str) -> Callable[[pd.DataFrame], pd.DataFram
 def cci(df: pd.DataFrame, ndays: int = 20) -> pd.DataFrame:
     df['TP'] = (df['high'] + df['low'] + df['close']) / 3
     df['sma'] = df['TP'].rolling(ndays).mean()
-    df['mad'] = df['TP'].rolling(ndays).apply(lambda x: pd.Series(x).mad())
+    df['mad'] = df['TP'].rolling(ndays).apply(lambda x: np.abs(x - x.mean()).mean())
     df['CCI'] = (df['TP'] - df['sma']) / (0.015 * df['mad'])
     return df.drop(['TP', 'sma', 'mad'], axis=1)

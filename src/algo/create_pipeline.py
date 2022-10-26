@@ -12,7 +12,7 @@ def create_preprocess_pipeline_train(train_data_fetcher):
                                                  cci,
                                                  add_label_buy_close,
                                                  remove_nans,
-                                                 create_cols_to_keep(["close", "absolute", "CCI", "angle", "close_lag1",
+                                                 create_cols_to_keep(["close", "absolute", "angle", "CCI", "close_lag1",
                                                                       "close_lag2", "close_lag3", "close_lag4",
                                                                       "close_lag5", "label",
                                                                       ])
