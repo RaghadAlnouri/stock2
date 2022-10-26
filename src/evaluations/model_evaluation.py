@@ -32,6 +32,10 @@ def main():
         # getting predictions for train and test
         train_data_fetcher = create_eval_data_fetcher(ticker)
         test_data_fetcher = create_eval_data_fetcher(ticker, train=False)
+
+        if train_data_fetcher(df).shape[0] == 0:
+            continue
+
         train_predictor = create_pipeline.create_predictor(df, train_data_fetcher, train_data_fetcher)
         test_predictor = create_pipeline.create_predictor(df, train_data_fetcher, test_data_fetcher)
         train_predictions = train_predictor(df)
@@ -48,10 +52,10 @@ def main():
         train_balanced_accuracy_score.append(balanced_accuracy_score(train_labels, train_predictions))
         test_balanced_accuracy_score.append(balanced_accuracy_score(test_labels, test_predictions))
 
-    model = 'Baseline Logistic Regression Model'
-    with open('balanced_accuracy_scores.csv', 'a') as csvfile:
-        score_writer = csv.writer(csvfile, delimiter=',', newline='')
-        score_writer.writerow([model, np.mean(train_balanced_accuracy_score), np.mean(test_balanced_accuracy_score)])
+    model_name = 'Baseline Logistic Regression Model'
+    with open('src/evaluations/balanced_accuracy_scores.csv', 'a') as csvfile:
+        score_writer = csv.writer(csvfile, delimiter=',')
+        score_writer.writerow([model_name, np.mean(train_balanced_accuracy_score), np.mean(test_balanced_accuracy_score)])
 
 
 if __name__ == "__main__":

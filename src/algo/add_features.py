@@ -46,3 +46,14 @@ def create_splitter(col_label: str) -> Callable[[pd.DataFrame], Tuple[pd.DataFra
 # simple nan remover
 def remove_nans(df: pd.DataFrame) -> pd.DataFrame:
     return df.dropna()
+
+
+# add fourier transform features
+def fourier_transform_features(df: pd.DataFrame) -> pd.DataFrame:
+    df = df.copy()
+    df['fft'] = np.fft.fft(np.asarray(df['close'].tolist()))
+    df['absolute'] = df['fft'].apply(lambda x: np.abs(x))
+    df['angle'] = df['fft'].apply(lambda x: np.angle(x))
+    return df.drop('fft', axis=1)
+
+
