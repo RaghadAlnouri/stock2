@@ -9,6 +9,7 @@ def create_preprocess_pipeline_train(train_data_fetcher):
     preprocess_pipeline_train = create_pipeline([train_data_fetcher,
                                                  create_lag_creator(NUM_LAGS, "close"),
                                                  create_fourier_transformer('close'),
+                                                 cci,
                                                  add_label_buy_close,
                                                  remove_nans,
                                                  create_cols_to_keep(["close", "absolute", "CCI", "angle", "close_lag1",
