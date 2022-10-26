@@ -3,8 +3,7 @@ from typing import Callable, List, Tuple
 import numpy as np
 import pandas as pd
 
-from src.algo.create_model import create_pipeline, create_logistic_regression_learner
-from src.business_logic.constants import NUM_LAGS
+from sklearn.preprocessing import StandardScaler
 
 
 # function to add lags to dataframe
@@ -57,3 +56,12 @@ def fourier_transform_features(df: pd.DataFrame) -> pd.DataFrame:
     return df.drop('fft', axis=1)
 
 
+def create_numeric_scaler(cols_to_scale: List[str]) -> Callable[[pd.DataFrame], pd.DataFrame]:
+    def numeric_scaler(df: pd.DataFrame) -> pd.DataFrame:
+        df = df.copy()
+        for col in cols_to_scale:
+            mean = np.mean(df[col])
+            std = np.std(df[col])
+            df[col] = df[col].apply(lambda x: (x - mean) / std)
+        return df
+    return numeric_scaler
