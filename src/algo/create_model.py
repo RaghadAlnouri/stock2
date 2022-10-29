@@ -1,7 +1,6 @@
 from typing import Any
 
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.linear_model import LogisticRegression
+from sklearn.neighbors import KNeighborsClassifier
 
 
 # pipeline creator
@@ -17,14 +16,14 @@ def create_pipeline(list_functions):
 
 # function to train and predict on data
 def create_model_learner():
-    rf = RandomForestClassifier()
+    model = KNeighborsClassifier()
 
     def train_model_on(training_set):
         X, Y = training_set
-        rf.fit(X, Y)
+        model.fit(X, Y)
 
         def predict_model_on(external_data):
-            return rf.predict(external_data)
+            return model.predict(external_data)
 
         return predict_model_on
 
