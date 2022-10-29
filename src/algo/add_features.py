@@ -66,8 +66,11 @@ def cci(df: pd.DataFrame, ndays: int = 20) -> pd.DataFrame:
     return df.drop(['TP', 'sma', 'mad'], axis=1)
 
 
-def create_ema_adder(spans: List[int]) -> Callable[[pd.DataFrame], pd.DataFrame]:
+def create_ema_adder(spans: List[int], col: str = 'close') -> Callable[[pd.DataFrame], pd.DataFrame]:
     def ema_adder(df: pd.DataFrame) -> pd.DataFrame:
         df = df.copy()
         for span in spans:
-            df
+            df[f'ema_{span}'] = df[col].ewm(span=span).mean().fillna(0)
+        return df
+    return ema_adder
+
