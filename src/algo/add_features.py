@@ -58,6 +58,7 @@ def create_fourier_transformer(col: str) -> Callable[[pd.DataFrame], pd.DataFram
 
 
 def cci(df: pd.DataFrame, ndays: int = 20) -> pd.DataFrame:
+    df = df.copy()
     df['TP'] = (df['high'] + df['low'] + df['close']) / 3
     df['sma'] = df['TP'].rolling(ndays).mean()
     df['mad'] = df['TP'].rolling(ndays).apply(lambda x: np.abs(x - x.mean()).mean())
