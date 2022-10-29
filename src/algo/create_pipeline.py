@@ -7,17 +7,15 @@ from src.business_logic.constants import NUM_LAGS
 # create training preprocessing pipeline
 def create_preprocess_pipeline_train(train_data_fetcher):
     preprocess_pipeline_train = create_pipeline([train_data_fetcher,
-                                                 create_lag_creator(NUM_LAGS, "close"),
+                                                 create_lag_creator(NUM_LAGS),
                                                  create_fourier_transformer('close'),
                                                  cci,
                                                  add_label_buy_close,
                                                  remove_nans,
                                                  create_cols_to_keep(["close", "CCI", "absolute", "angle",
-                                                                      "close_lag1", "close_lag2",
-                                                                      "close_lag3", "close_lag4", "close_lag5",
-                                                                      "close_lag6", "close_lag6", "close_lag7",
-                                                                      "close_lag8", "close_lag9", "close_lag10",
-                                                                      "label", ])
+                                                                      "close_lag1", "close_lag5",
+                                                                      "close_lag9", "close_lag13", "close_lag17",
+                                                                      "close_lag21", "close_lag25", "label", ])
 
                                                  ]
                                                 )
@@ -32,10 +30,9 @@ def create_preprocess_pipeline_predict(predict_data_fetcher):
                                                    cci,
                                                    remove_nans,
                                                    create_cols_to_keep(["close", "CCI", "absolute", "angle",
-                                                                        "close_lag1", "close_lag2",
-                                                                        "close_lag3", "close_lag4", "close_lag5",
-                                                                        "close_lag6", "close_lag6", "close_lag7",
-                                                                        "close_lag8", "close_lag9", "close_lag10", ])
+                                                                        "close_lag1", "close_lag5",
+                                                                        "close_lag9", "close_lag13", "close_lag17",
+                                                                        "close_lag21", "close_lag25", ])
 
                                                    ]
                                                   )

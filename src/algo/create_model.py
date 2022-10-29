@@ -6,7 +6,7 @@ from sklearn.pipeline import Pipeline
 
 
 # pipeline creator
-def create_pipeline(list_functions: List[Callable[[...], ...]]) -> Callable[[Any], Any]:
+def create_pipeline(list_functions):
     def pipeline(inputs: Any) -> Any:
         res = inputs
         for function in list_functions:
@@ -18,9 +18,10 @@ def create_pipeline(list_functions: List[Callable[[...], ...]]) -> Callable[[Any
 
 # function to train and predict on data
 def create_model_learner(scale: bool = True):
-    steps = [('model', KNeighborsClassifier())]
+    steps = list()
     if scale:
         steps.append(('scaler', MinMaxScaler()))
+    steps.append(('model', KNeighborsClassifier()))
     model = Pipeline(steps)
 
     def train_model_on(training_set):

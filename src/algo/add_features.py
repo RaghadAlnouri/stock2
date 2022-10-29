@@ -5,10 +5,10 @@ import pandas as pd
 
 
 # function to add lags to dataframe
-def create_lag_creator(num_lags: int, col_name: str) -> Callable[[pd.DataFrame], pd.DataFrame]:
+def create_lag_creator(num_lags: int, col_name: str = 'close', skip: int = 4) -> Callable[[pd.DataFrame], pd.DataFrame]:
     def lag_creator(df: pd.DataFrame) -> pd.DataFrame:
-        for num in range(num_lags):
-            df[f"{col_name}_lag{num + 1}"] = df[col_name].shift(num)
+        for num in range(1, num_lags, skip):
+            df[f"{col_name}_lag{num}"] = df[col_name].shift(num)
         return df
 
     return lag_creator
@@ -64,3 +64,10 @@ def cci(df: pd.DataFrame, ndays: int = 20) -> pd.DataFrame:
     df['mad'] = df['TP'].rolling(ndays).apply(lambda x: np.abs(x - x.mean()).mean())
     df['CCI'] = (df['TP'] - df['sma']) / (0.015 * df['mad'])
     return df.drop(['TP', 'sma', 'mad'], axis=1)
+
+
+def create_ema_adder(spans: List[int]) -> Callable[[pd.DataFrame], pd.DataFrame]:
+    def ema_adder(df: pd.DataFrame) -> pd.DataFrame:
+        df = df.copy()
+        for span in spans:
+            df
