@@ -1,4 +1,6 @@
 from typing import Any
+
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
 
 
@@ -14,16 +16,16 @@ def create_pipeline(list_functions):
 
 
 # function to train and predict on data
-def create_logistic_regression_learner():
-    lr = LogisticRegression()
+def create_model_learner():
+    rf = RandomForestClassifier()
 
-    def train_lr_on(training_set):
+    def train_model_on(training_set):
         X, Y = training_set
-        lr.fit(X, Y)
+        rf.fit(X, Y)
 
-        def predict_lr_on(external_data):
-            return lr.predict(external_data)
+        def predict_model_on(external_data):
+            return rf.predict(external_data)
 
-        return predict_lr_on
+        return predict_model_on
 
-    return train_lr_on
+    return train_model_on
