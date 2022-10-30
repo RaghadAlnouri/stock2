@@ -17,7 +17,7 @@ def create_lag_creator(num_lags: int, col_name: str = 'close', skip: int = 4) ->
 # function to add the label
 def add_label_buy_close(df: pd.DataFrame) -> pd.DataFrame:
     df["tomorrow_close"] = df.loc[:, "close"].shift(-1)
-    df["label"] = np.where(df.loc[:, "close"] >= df.loc[:, "tomorrow_close"], "SELL", "BUY")
+    df["label"] = np.where(df.loc[:, "close"] >= df.loc[:, "tomorrow_close"], 0, 1)
     return df.drop("tomorrow_close", axis=1)
 
 
