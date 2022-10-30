@@ -1,5 +1,4 @@
-from typing import Any, Callable, List
-
+from typing import Any
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.pipeline import Pipeline
