@@ -1,5 +1,5 @@
 from typing import Any
-from sklearn.neighbors import KNeighborsClassifier
+from xgboost import XGBClassifier
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.pipeline import Pipeline
 
@@ -20,7 +20,7 @@ def create_model_learner(scale: bool = True):
     steps = list()
     if scale:
         steps.append(('scaler', MinMaxScaler()))
-    steps.append(('model', KNeighborsClassifier()))
+    steps.append(('model', XGBClassifier()))
     model = Pipeline(steps)
 
     def train_model_on(training_set):
