@@ -1,5 +1,6 @@
 from typing import Any
-from sklearn.naive_bayes import GaussianNB
+# from sklearn.naive_bayes import GaussianNB
+from xgboost import XGBClassifier
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.pipeline import Pipeline
 
@@ -20,7 +21,7 @@ def create_model_learner(scale: bool = True):
     steps = list()
     if scale:
         steps.append(('scaler', MinMaxScaler()))
-    steps.append(('model', GaussianNB()))
+    steps.append(('model', XGBClassifier(n_estimators=200)))
     model = Pipeline(steps)
 
     def train_model_on(training_set):
