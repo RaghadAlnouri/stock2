@@ -30,7 +30,7 @@ def business_logic_get_model(ticker: str):
     model = get_model_from_bucket(model_filename, bucket_name)
     if model is None:
         train_data_fetcher = create_data_fetcher(NUM_LAGS)
-        predict_data_fetcher = create_data_fetcher(NUM_LAGS, True)
+        predict_data_fetcher = create_data_fetcher(100, True)
         model = create_predictor(ticker, train_data_fetcher, predict_data_fetcher)
         with open(model_filename, 'wb') as f:
             dill.dump(model, f)
@@ -39,7 +39,7 @@ def business_logic_get_model(ticker: str):
 
 
 def get_prediction(model, ticker):
-    prediction = model(ticker)
+    prediction = model(ticker)[-1]
     if prediction == 0:
         return "SELL"
     else:

@@ -63,7 +63,7 @@ def create_preprocess_pipeline_predict(predict_data_fetcher):
 def create_pipeline_model_creator(preprocess_pipeline_train):
     pipeline_model_creator = create_pipeline([preprocess_pipeline_train,
                                               create_splitter('label'),
-                                              create_model_learner()]
+                                              create_model_learner(False)]
                                              )
     return pipeline_model_creator
 
