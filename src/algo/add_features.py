@@ -85,3 +85,25 @@ def create_diff_features(num_diffs: int) -> Callable[[pd.DataFrame], pd.DataFram
         return df
 
     return diff_features
+
+
+def add_macd(df: pd.DataFrame) -> pd.DataFrame:
+    df = df.copy()
+    df['macd'] = df[["close"]].ewm(span=12).mean().fillna(0) - df[["close"]].ewm(span=24).mean().fillna(0)
+    return df
+
+
+def add_days_months_years_from_index(df: pd.DataFrame) -> pd.DataFrame:
+    df['day_of_year'] = df.index.dayofyear
+    df['month'] = df.index.month
+    df['year'] = df.index.year
+    return df
+
+
+def create_sin_cos_transformer(period: int, col: str) -> Callable[[pd.DataFrame], pd.DataFrame]:
+    def sin_cos_transformer(df: pd.DataFrame) -> pd.DataFrame:
+        df[f'{col}_sin'] = df[col].apply(lambda x: np.sin(x / period * 2 * np.pi))
+        df[f'{col}_cos'] = df[col].apply(lambda x: np.cos(x / period * 2 * np.pi))
+        return df
+
+    return sin_cos_transformer
