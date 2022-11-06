@@ -1,5 +1,5 @@
 from src.algo.add_features import create_lag_creator, add_label_buy_close, remove_nans, create_cols_to_keep, \
-    create_splitter, create_fourier_transformer, cci, create_ema_adder, create_diff_features, \
+    create_splitter, cci, create_ema_adder, create_diff_features, \
     add_days_months_years_from_index, create_sin_cos_transformer
 from src.algo.create_model import create_pipeline, create_model_learner
 from src.business_logic.constants import NUM_LAGS

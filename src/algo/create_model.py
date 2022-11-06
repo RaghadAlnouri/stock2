@@ -1,5 +1,4 @@
 from typing import Any
-from sklearn.linear_model import LogisticRegression
 from xgboost import XGBClassifier
 from sklearn.preprocessing import MaxAbsScaler
 from sklearn.pipeline import Pipeline

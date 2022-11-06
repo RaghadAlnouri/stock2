@@ -9,6 +9,7 @@ dependencies:
       - pandas
       - requests
       - scikit-learn
+      - xgboost
       - dill
       - requests-html
       - yahoo-fin
