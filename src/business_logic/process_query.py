@@ -39,4 +39,8 @@ def business_logic_get_model(ticker: str):
 
 
 def get_prediction(model, ticker):
-    return model(ticker)[-1]
+    prediction = model(ticker)
+    if prediction == 0:
+        return "SELL"
+    else:
+        return "BUY"
