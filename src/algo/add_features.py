@@ -75,3 +75,13 @@ def create_ema_adder(spans: List[int], col: str = 'close') -> Callable[[pd.DataF
         return df
 
     return ema_adder
+
+
+def create_diff_features(num_diffs: int) -> Callable[[pd.DataFrame], pd.DataFrame]:
+    def diff_features(df: pd.DataFrame) -> pd.DataFrame:
+        for i in range(1, num_diffs + 1):
+            df[f'diff_close_lag{i}'] = df['close'] - df['close'].shift(i)
+
+        return df
+
+    return diff_features
