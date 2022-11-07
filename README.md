@@ -75,7 +75,8 @@ docker run -it -p 8080:8080 -v $GOOGLE_APPLICATION_CREDENTIALS:/creds.json -e GO
 export PYTHONPATH='/<PATH TO YOUR PROJECT>/stock2'
 python src/evaluations/model_evaluation.py   
 '''
-Then it should run against all stocks on the S&P500 using the CSV in the evaluation folder.
+Then it should run against all stocks on the S&P500 using a CSV in the evaluation folder.
+Theres a script in notebook format in the folder to download the S&P500 to a CSV if you need.
 
 ## Deploy your app
 
