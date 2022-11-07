@@ -66,6 +66,17 @@ docker run -it -p 8080:8080 -v $GOOGLE_APPLICATION_CREDENTIALS:/creds.json -e GO
 
 ```
 
+## Using Evaluation.py to Evaluate Model
+
+- This script allows testing of the model using the Balanced Accuracy Metric. It is setup to be used with 1 model per ticker on S&P 500
+- If the model is changed the script will need to be updated
+- Because this file is not at the main location you may run into trouble running it, in terminal run
+'''
+export PYTHONPATH='/<PATH TO YOUR PROJECT>/stock2'
+python src/evaluations/model_evaluation.py   
+'''
+Then it should run against all stocks on the S&P500 using the CSV in the evaluation folder.
+
 ## Deploy your app
 
 1. Push your code. If you are set up correctly, you should push the changes in your code and it will trigger a new build. You can check the status of your build on the Google build console.
