@@ -1,6 +1,6 @@
 from src.algo.add_features import create_lag_creator, add_label_buy_close, remove_nans, create_cols_to_keep, \
     create_splitter, cci, create_ema_adder, create_diff_features, \
-    add_days_months_years_from_index, create_sin_cos_transformer
+    add_days_months_years_from_index, create_sin_cos_transformer, add_macd, create_fourier_transformer
 from src.algo.create_model import create_pipeline, create_model_learner
 from src.business_logic.constants import NUM_LAGS
 
@@ -12,18 +12,20 @@ def create_preprocess_pipeline_train(train_data_fetcher):
                                                  create_sin_cos_transformer(365, 'day_of_year'),
                                                  create_sin_cos_transformer(12, 'month'),
                                                  create_lag_creator(NUM_LAGS),
-                                                 # create_fourier_transformer('close'),
+                                                 create_fourier_transformer('close'),
+                                                 add_macd,
                                                  cci,
-                                                 create_ema_adder([10, 20, 50]),
+                                                 create_ema_adder([10, 20, 30]),
                                                  create_diff_features(5),
                                                  add_label_buy_close,
                                                  remove_nans,
                                                  create_cols_to_keep(["close", 'year', 'month_sin', 'month_cos',
                                                                       'day_of_year_sin', 'day_of_year_cos',
-                                                                      "CCI", "close_lag1", "close_lag5",
+                                                                      "CCI", "angle", "absolute", "macd",
+                                                                      "close_lag1", "close_lag5",
                                                                       "close_lag9", "close_lag13", "close_lag17",
                                                                       "close_lag21", "close_lag25", "ema_10",
-                                                                      "ema_20", "ema_50", 'diff_close_lag1',
+                                                                      "ema_20", "ema_30", 'diff_close_lag1',
                                                                       'diff_close_lag2', 'diff_close_lag3',
                                                                       'diff_close_lag4', 'diff_close_lag5',
                                                                       "label", ])
@@ -40,17 +42,19 @@ def create_preprocess_pipeline_predict(predict_data_fetcher):
                                                    create_sin_cos_transformer(365, 'day_of_year'),
                                                    create_sin_cos_transformer(12, 'month'),
                                                    create_lag_creator(NUM_LAGS, "close"),
-                                                   # create_fourier_transformer('close'),
+                                                   create_fourier_transformer('close'),
+                                                   add_macd,
                                                    cci,
-                                                   create_ema_adder([10, 20, 50]),
+                                                   create_ema_adder([10, 20, 30]),
                                                    create_diff_features(5),
                                                    remove_nans,
                                                    create_cols_to_keep(["close", 'year', 'month_sin', 'month_cos',
                                                                         'day_of_year_sin', 'day_of_year_cos',
-                                                                        "CCI", "close_lag1", "close_lag5",
+                                                                        "CCI", "angle", "absolute", "macd",
+                                                                        "close_lag1", "close_lag5",
                                                                         "close_lag9", "close_lag13", "close_lag17",
                                                                         "close_lag21", "close_lag25", "ema_10",
-                                                                        "ema_20", "ema_50", 'diff_close_lag1',
+                                                                        "ema_20", "ema_30", 'diff_close_lag1',
                                                                         'diff_close_lag2', 'diff_close_lag3',
                                                                         'diff_close_lag4', 'diff_close_lag5', ])
 
