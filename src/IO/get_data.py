@@ -8,7 +8,7 @@ def create_data_fetcher(days: int, last: bool = False) -> Callable[[str], pd.Dat
     def data_fetcher(ticker: str) -> pd.DataFrame:
         if last:
             now = datetime.datetime.now()
-            start_date = now - datetime.timedelta(days=days + 2)
+            start_date = now - datetime.timedelta(days=days)
             return si.get_data(ticker, start_date)
         return si.get_data(ticker)
 
