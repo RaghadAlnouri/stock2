@@ -1,5 +1,5 @@
 import configparser
-
+import pendulum
 import dill
 
 from src.IO.get_data import create_data_fetcher
@@ -19,8 +19,13 @@ def get_bucket_name() -> str:
     return f'{ROOT_BUCKET}_{version.replace(".", "")}'
 
 
+def get_current_date():
+    return f'{pendulum.now().year}_{pendulum.now().month}_{pendulum.now().week_of_month}'
+
+
 def get_model_filename_from_ticker(ticker: str) -> str:
-    return f'{ticker}.dill'
+    date = get_current_date()
+    return f'{ticker}_{date}.dill'
 
 
 def business_logic_get_model(ticker: str):
