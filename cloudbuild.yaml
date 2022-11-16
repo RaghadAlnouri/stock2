@@ -1,8 +1,8 @@
 steps:
 - name: 'gcr.io/cloud-builders/docker'
-  args: [ 'build', '-t', 'northamerica-northeast1-docker.pkg.dev/ycgn-228-stock2-project/ycng228-stock2-project/ycng_image_predictor', '.' ]
-images: ['northamerica-northeast1-docker.pkg.dev/ycgn-228-stock2-project/ycng228-stock2-project/ycng_image_predictor']
+  args: [ 'build', '-t', 'us-central1-docker.pkg.dev/nlp-course-362518/nlp-course-362518/image_predictor', '.' ]
+images: ['us-central1-docker-docker.pkg.dev/nlp-course-362518/nlp-course-362518/image_predictor']
 #options:
 #  pool:
-#    name: 'projects/stock-ycng-228/locations/us-east1/workerPools/mypool'
+#    name: 'projects/nlp-course-362518/locations/us-central1/workerPools/mypool'
 timeout: '1200s'

@@ -1,5 +1,5 @@
 from flask import Flask
-import git
+
 
 from src.business_logic.process_query import business_logic_get_model, get_prediction
 
@@ -13,17 +13,8 @@ def hello():
 
 @app.route("/get_stock_val/<ticker>", methods=["GET"])
 def get_stock_val(ticker: str) -> str:
-    model = business_logic_get_model(ticker)
-    prediction = get_prediction(model, ticker)
+    prediction = get_prediction(ticker)
     return f'{prediction}'
-
-
-@app.route('/getversion/')
-def getversion():
-    repo = git.Repo(search_parent_directories=True)
-    sha = repo.head.object.hexsha
-
-    return f'{sha}\n'
 
 
 if __name__ == "__main__":

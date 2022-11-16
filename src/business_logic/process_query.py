@@ -1,6 +1,13 @@
-import configparser
-import pendulum
-import dill
+from google.cloud import automl_v1beta1 as automl
+import numpy as np
+import requests
+from google.api import httpbody_pb2
+from google.cloud import aiplatform as aip
+from google.cloud import aiplatform_v1 as gapic
+import json
+
+from google.api import httpbody_pb2
+from google.cloud import aiplatform_v1
 
 from src.IO.get_data import create_data_fetcher
 from src.IO.storage_tools import get_model_from_bucket, upload_file_to_bucket, create_bucket
@@ -8,44 +15,34 @@ from src.algo.create_pipeline import create_predictor
 from src.business_logic.constants import NUM_LAGS, ROOT_BUCKET
 
 
-def get_version() -> str:
-    config = configparser.ConfigParser()
-    config.read("application.conf")
-    return config["DEFAULT"]["version"]
+def get_prediction(ticker):
+    DATA = {
+    "signature_name": "predict",
+    "instances": [
+        {"formatted_date": "2022-11-16",
+                "high": "116.80999755859376",
+                "low":"113.2300033569336",
+                "open":"115.0",
+                "close":"115.01000213623048",
+                "volume":"2081600.0",
+                "ticker":ticker,
+        }
+    ],
+    }
+    endpoint = aip.Endpoint('projects/nlp-course-362518/locations/us-central1/endpoints/799322963160596480')
 
+    http_body = httpbody_pb2.HttpBody(
+        data=json.dumps(DATA).encode("utf-8"),
+        content_type="application/json",
+    )
+    req = aiplatform_v1.RawPredictRequest(
+        http_body=http_body, endpoint=endpoint.resource_name
+    )
+    API_ENDPOINT = "{}-aiplatform.googleapis.com".format(REGION)
+    client_options = {"api_endpoint": API_ENDPOINT}
 
-def get_bucket_name() -> str:
-    version = get_version()
-    return f'{ROOT_BUCKET}_{version.replace(".", "")}'
+    pred_client = aip.gapic.PredictionServiceClient(client_options=client_options)
 
-
-def get_current_date():
-    return f'{pendulum.now().year}_{pendulum.now().month}_{pendulum.now().week_of_month}'
-
-
-def get_model_filename_from_ticker(ticker: str) -> str:
-    date = get_current_date()
-    return f'{ticker}_{date}.dill'
-
-
-def business_logic_get_model(ticker: str):
-    bucket_name = get_bucket_name()
-    create_bucket(bucket_name)
-    model_filename = get_model_filename_from_ticker(ticker)
-    model = get_model_from_bucket(model_filename, bucket_name)
-    if model is None:
-        train_data_fetcher = create_data_fetcher(NUM_LAGS)
-        predict_data_fetcher = create_data_fetcher(100, True)
-        model = create_predictor(ticker, train_data_fetcher, predict_data_fetcher)
-        with open(model_filename, 'wb') as f:
-            dill.dump(model, f)
-        upload_file_to_bucket(model_filename, bucket_name)
-    return model
-
-
-def get_prediction(model, ticker):
-    prediction = model(ticker)[-1]
-    if prediction == 0:
-        return "SELL"
-    else:
-        return "BUY"
+    response = pred_client.raw_predict(req)
+    return response
+    
